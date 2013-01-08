@@ -29,3 +29,13 @@
 *.cache
 *.idb
 *.manifest
+
+# XCode files
+*.LinkFileList
+*.dat
+*.hmap
+*.dep
+*.xcent
+*.pbxbtree
+*.pbxuser
+*.pbxsymbols
