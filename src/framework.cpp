@@ -39,7 +39,7 @@ void Framework::RunAllTests()
 {
     *this << unitos::String("========== Running Unit Tests =========\n");
 
-    __int64 startTime = unitos::GetSystemTime();
+    __int64 startTime = unitos::getSystemTime();
     int testedCount = 0;
     int passedCount = 0;
     for(int i = 0; i < this->suiteCount; ++i) {
@@ -48,7 +48,7 @@ void Framework::RunAllTests()
         testedCount += suite->TestedCount();
         passedCount += suite->PassedCount();
     }
-    __int64 endTime = unitos::GetSystemTime();
+    __int64 endTime = unitos::getSystemTime();
 
     *this << unitos::String("========== End of Unit Tests ==========\n");
     if(testedCount != passedCount) {

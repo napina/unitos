@@ -22,13 +22,12 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #include "unitos/platform.h"
-#include "string.h"
 #if defined(__UNITOS_MACOSX__)
 #include <mach/mach_time.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <unistd.h>
-#elif defined(__UNITOS_WIN32__)
+#elif defined(__UNITOS_WINDOWS__)
 #include <windows.h>
 #elif defined(__UNITOS_LINUX__)
 #include <sys/ptrace.h>
@@ -36,7 +35,7 @@ IN THE SOFTWARE.
 
 namespace unitos {
 
-bool IsDebuggerConnected()
+bool isDebuggerConnected()
 {
 #if defined(__UNITOS_MACOSX__)
     // From Technical Q&A QA1361
@@ -61,18 +60,19 @@ bool IsDebuggerConnected()
     junk = sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
 
     return ( (info.kp_proc.p_flag & P_TRACED) != 0 );
-#elif defined(__UNITOS_WIN32__)
+#elif defined(__UNITOS_WINDOWS__)
     return ::IsDebuggerPresent() == TRUE;
 #elif defined(__UNITOS_LINUX__)
     return ptrace(PTRACE_TRACEME, 0, NULL, 0) == -1;
 #else
-    #error IsDebuggerConnected not implemented for current platform
+    #error isDebuggerConnected not implemented for current platform
 #endif
 }
+//-----------------------------------------------------------------------------
 
-__int64 GetSystemTime()
+__int64 getSystemTime()
 {
-#if defined(__UNITOS_WIN32__)
+#if defined(__UNITOS_WINDOWS__)
     static __int64 start = 0;
     static __int64 frequency = 0;
     static double timeToMilliseconds = 0.0;
@@ -107,7 +107,7 @@ __int64 GetSystemTime()
     diff = counter - start;
     return (__int64)(diff * timeToMilliseconds);
 #else
-#   error GetSystemTime not implemented for current platform
+#   error getSystemTime not implemented for current platform
 #endif
 }
 

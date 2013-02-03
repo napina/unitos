@@ -62,9 +62,9 @@ bool Suite::RunTest(SuiteTestInfo& info)
 #if !defined(UNITOS_NO_EXCEPTIONS)
     try {
 #endif
-        __int64 startTime = unitos::GetSystemTime();
+        __int64 startTime = unitos::getSystemTime();
         test->Run();
-        __int64 endTime = unitos::GetSystemTime();
+        __int64 endTime = unitos::getSystemTime();
         info.timeMicros = endTime - startTime;
 #if !defined(UNITOS_NO_EXCEPTIONS)
     } catch(...) {
