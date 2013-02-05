@@ -28,14 +28,14 @@ IN THE SOFTWARE.
 #if defined(__linux__) && defined(__ELF__)
 #   define __UNITOS_LINUX__ (1)
 #   define __UNITOS_ARCH32__ (1)
+#elif defined(__APPLE__) && defined(__MACH__)
+#   define __UNITOS_MACOSX__ (1)
+#   define __UNITOS_ARCH32__ (1)
 #elif defined(_WIN64) || defined(_M_X64)
 #   define __UNITOS_WINDOWS__ (1)
 #   define __UNITOS_ARCH64__ (1)
 #elif defined(_WIN32) || defined(_M_IX86)
 #   define __UNITOS_WINDOWS__ (1)
-#   define __UNITOS_ARCH32__ (1)
-#elif defined(__APPLE__) && defined(__MACH__)
-#   define __UNITOS_MACOSX__ (1)
 #   define __UNITOS_ARCH32__ (1)
 #else
 #error Could not determine your operating system in platform.h
