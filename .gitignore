@@ -39,3 +39,6 @@
 *.pbxbtree
 *.pbxuser
 *.pbxsymbols
+
+# filter folders
+samples/iphone/
