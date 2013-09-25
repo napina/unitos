@@ -48,7 +48,7 @@ String& String::operator<<(float value)
     }
     (*this) << 'f';
 
-	return *this;
+    return *this;
 }
 
 String& String::operator<<(long long int value)

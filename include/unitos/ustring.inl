@@ -159,10 +159,13 @@ __forceinline unitos::String toString(bool const& value)
 }
 
 template<typename T>
-__forceinline unitos::String toString(T* value)
+inline unitos::String toString(T* value)
 {
     unitos::String result(17);
-    result << (int)value;
+    if(value == nullptr)
+        result << "nullptr";
+    else
+        result << (int)value;
     result.terminate();
     return result;
 }
