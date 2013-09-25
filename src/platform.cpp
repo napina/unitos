@@ -54,30 +54,30 @@ bool isDebuggerConnected()
     mib[0] = CTL_KERN;
     mib[1] = KERN_PROC;
     mib[2] = KERN_PROC_PID;
-    mib[3] = getpid();
+    mib[3] = ::getpid();
 
     size = sizeof(info);
-    junk = sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
+    junk = ::sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
 
-    return ( (info.kp_proc.p_flag & P_TRACED) != 0 );
+    return (info.kp_proc.p_flag & P_TRACED) != 0;
 #elif defined(__UNITOS_WINDOWS__)
     return ::IsDebuggerPresent() == TRUE;
 #elif defined(__UNITOS_LINUX__)
-    return ptrace(PTRACE_TRACEME, 0, NULL, 0) == -1;
+    return ::ptrace(PTRACE_TRACEME, 0, NULL, 0) == -1;
 #else
     #error isDebuggerConnected not implemented for current platform
 #endif
 }
 //-----------------------------------------------------------------------------
 
-__int64 getSystemTime()
+int64_t getSystemTime()
 {
 #if defined(__UNITOS_WINDOWS__)
-    static __int64 start = 0;
-    static __int64 frequency = 0;
+    static int64_t start = 0;
+    static int64_t frequency = 0;
     static double timeToMilliseconds = 0.0;
-    __int64 counter = 0;
-    __int64 diff = 0;
+    int64_t counter = 0;
+    int64_t diff = 0;
 
     if(start == 0) {
         ::QueryPerformanceCounter((LARGE_INTEGER*)&start);
@@ -88,24 +88,24 @@ __int64 getSystemTime()
 
     ::QueryPerformanceCounter((LARGE_INTEGER*)&counter);
     diff = counter - start;
-    return (__int64)(diff * timeToMilliseconds);
+    return (int64_t)(diff * timeToMilliseconds);
 #elif defined(__UNITOS_MACOSX__)
-    static __int64 start = 0;
+    static int64_t start = 0;
     static double timeToMilliseconds = 0.0;
-    __int64 counter = 0;
-    __int64 diff = 0;
+    int64_t counter = 0;
+    int64_t diff = 0;
 
     if(start == 0) {
-        mach_timebase_info_data_t info;
-        mach_timebase_info(&info);
-        start = mach_absolute_time();
+        ::mach_timebase_info_data_t info;
+        ::mach_timebase_info(&info);
+        start = ::mach_absolute_time();
         timeToMilliseconds = 1e-6 * ((double)info.numer) / ((double)info.denom);
         return 0;
     }
 
-    counter = mach_absolute_time();
+    counter = ::mach_absolute_time();
     diff = counter - start;
-    return (__int64)(diff * timeToMilliseconds);
+    return (int64_t)(diff * timeToMilliseconds);
 #else
 #   error getSystemTime not implemented for current platform
 #endif

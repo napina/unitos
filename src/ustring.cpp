@@ -53,7 +53,7 @@ String& String::operator<<(float value)
 
 String& String::operator<<(long long int value)
 {
-    char* ptr = &this->buffer[this->length];
+    char* ptr = &m_buffer[m_length];
     char* ptr1 = ptr;
     char tmp_char;
     long long int tmp_value;
@@ -63,12 +63,12 @@ String& String::operator<<(long long int value)
         value /= 10;
         (*ptr) = "fedcba9876543210123456789abcdef"[15 + (tmp_value - value * 10)];
         ++ptr;
-        ++(this->length);
+        ++m_length;
     } while(value);
 
     if(tmp_value < 0) {
         *ptr++ = '-';
-        ++(this->length);
+        ++m_length;
     }
     --ptr;
 
@@ -79,12 +79,12 @@ String& String::operator<<(long long int value)
         *ptr1++ = tmp_char;
     }
 
-	return *this;
+    return *this;
 }
 
 String& String::operator<<(unsigned long long int value)
 {
-    char* ptr = &this->buffer[this->length];
+    char* ptr = &m_buffer[m_length];
     char* ptr1 = ptr;
     char tmp_char;
     unsigned long long int tmp_value;
@@ -94,7 +94,7 @@ String& String::operator<<(unsigned long long int value)
         value /= 10;
         (*ptr) = "fedcba9876543210123456789abcdef"[15 + (tmp_value - value * 10)];
         ++ptr;
-        ++(this->length);
+        ++m_length;
     } while(value);
     --ptr;
 
@@ -105,7 +105,7 @@ String& String::operator<<(unsigned long long int value)
         *ptr1++ = tmp_char;
     }
 
-	return *this;
+    return *this;
 }
 
 /*int String::ComputeLength(char const* text)

@@ -39,25 +39,25 @@ public:
     Framework();
     ~Framework();
     
-    void RegisterOutput(unitos::Output* handler);
+    void registerOutput(unitos::Output* handler);
     
-    void RunAllTests();
-    void RunSuiteTests(char const* suiteName);
-    void RunSuiteTest(char const* suiteName, char const* testName);
+    void runAllTests();
+    void runSuiteTests(char const* suiteName);
+    void runSuiteTest(char const* suiteName, char const* testName);
     
     void operator<<(unitos::String const& text);
-    static Framework& Get();
+    static Framework& get();
     
 private:
     friend class SuiteRegistrator;
-    void RegisterSuite(unitos::Suite* suite);
-    unitos::Suite* FindSuite(char const* name);
+    void registerSuite(unitos::Suite* suite);
+    unitos::Suite* findSuite(char const* name);
 
 private:
-    unitos::Suite* suites[256];
-    unitos::Output* outputs[8];
-    int suiteCount;
-    int outputCount;
+    unitos::Suite* m_suites[256];
+    unitos::Output* m_outputs[8];
+    int m_suiteCount;
+    int m_outputCount;
 };
 
 class SuiteRegistrator

@@ -26,8 +26,8 @@ IN THE SOFTWARE.
 namespace unitos {
 
 Framework::Framework()
-    : suiteCount(0)
-    , outputCount(0)
+    : m_suiteCount(0)
+    , m_outputCount(0)
 {
 }
 
@@ -35,20 +35,20 @@ Framework::~Framework()
 {
 }
 
-void Framework::RunAllTests()
+void Framework::runAllTests()
 {
     *this << unitos::String("========== Running Unit Tests =========\n");
 
-    __int64 startTime = unitos::getSystemTime();
+    int64_t startTime = unitos::getSystemTime();
     int testedCount = 0;
     int passedCount = 0;
-    for(int i = 0; i < this->suiteCount; ++i) {
-        Suite* suite = this->suites[i];
-        suite->RunTests();
-        testedCount += suite->TestedCount();
-        passedCount += suite->PassedCount();
+    for(int i = 0; i < m_suiteCount; ++i) {
+        Suite* suite = m_suites[i];
+        suite->runTests();
+        testedCount += suite->testedCount();
+        passedCount += suite->passedCount();
     }
-    __int64 endTime = unitos::getSystemTime();
+    int64_t endTime = unitos::getSystemTime();
 
     *this << unitos::String("========== End of Unit Tests ==========\n");
     if(testedCount != passedCount) {
@@ -60,7 +60,7 @@ void Framework::RunAllTests()
         message << " tests passed in time ";
         message << ((endTime - startTime) / 1000000);
         message << "s\n";
-        message.Terminate();
+        message.terminate();
         *this << message;
     } else {
         unitos::String message(128);
@@ -69,51 +69,51 @@ void Framework::RunAllTests()
         message << " tests passed in time ";
         message << ((endTime - startTime) / 1000000);
         message << "s\n";
-        message.Terminate();
+        message.terminate();
         *this << message;
     }
     *this << unitos::String("=======================================\n");
 }
 
-void Framework::RunSuiteTests(char const* name)
+void Framework::runSuiteTests(char const* name)
 {
-    unitos::Suite* suite = FindSuite(name);
+    unitos::Suite* suite = findSuite(name);
     if(suite) {
-        suite->RunTests();
+        suite->runTests();
     }
-}
-    
-void Framework::RegisterOutput(unitos::Output* output)
-{
-    this->outputs[this->outputCount] = output;
-    ++(this->outputCount);
 }
 
-void Framework::RegisterSuite(unitos::Suite* suite)
+void Framework::registerOutput(unitos::Output* output)
+{
+    m_outputs[m_outputCount] = output;
+    ++m_outputCount;
+}
+
+void Framework::registerSuite(unitos::Suite* suite)
 {
     // todo better list
-    this->suites[this->suiteCount] = suite;
-    ++(this->suiteCount);
+    m_suites[m_suiteCount] = suite;
+    ++m_suiteCount;
 }
     
-unitos::Suite* Framework::FindSuite(char const* name)
+unitos::Suite* Framework::findSuite(char const* name)
 {
-    for(int i = 0; i < this->suiteCount; ++i) {
-        /*if(strcmp(this->suites[i]->GetName(), name) == 0) */{
-            return this->suites[i];
+    for(int i = 0; i < m_suiteCount; ++i) {
+        if(::strcmp(m_suites[i]->getName(), name) == 0) {
+            return m_suites[i];
         }
     }
-    return 0;
+    return nullptr;
 }
     
 void Framework::operator<<(String const& text)
 {
-    for(int i = 0; i < this->outputCount; ++i) {
-        *(this->outputs[i]) << text;
+    for(int i = 0; i < m_outputCount; ++i) {
+        *(m_outputs[i]) << text;
     }
 }
 
-Framework& Framework::Get()
+Framework& Framework::get()
 {
     static Framework framework;
     return framework;
@@ -121,7 +121,7 @@ Framework& Framework::Get()
 
 SuiteRegistrator::SuiteRegistrator(unitos::Suite* suite)
 {
-    Framework::Get().RegisterSuite(suite);
+    Framework::get().registerSuite(suite);
 }
 
 }

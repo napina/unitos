@@ -31,110 +31,110 @@ IN THE SOFTWARE.
 namespace unitos {
 
 __forceinline String::String(int capasity)
-    : buffer(0)
-    , capasity(capasity)
-    , length(0)
+    : m_buffer(nullptr)
+    , m_capasity(capasity)
+    , m_length(0)
 {
-    this->buffer = new char[capasity];
-    this->buffer[0] = 0;
+    m_buffer = new char[capasity];
+    m_buffer[0] = 0;
 }
 
 __forceinline String::String(String const& other)
-    : buffer(0)
-    , length(0)
-    , capasity(0)
+    : m_buffer(nullptr)
+    , m_length(0)
+    , m_capasity(0)
 {
-    this->length = other.length;
-    this->capasity = other.length + 1;
-    this->buffer = new char[this->capasity];
-	::memcpy(this->buffer, other.buffer, this->capasity);
+    m_length = other.m_length;
+    m_capasity = other.m_length + 1;
+    m_buffer = new char[m_capasity];
+    ::memcpy(m_buffer, other.m_buffer, m_capasity);
 }
 
 __forceinline String::String(char const* str, size_t length)
-    : buffer(0)
-    , length(length)
-    , capasity(0)
+    : m_buffer(nullptr)
+    , m_length(length)
+    , m_capasity(0)
 {
-    this->capasity = length + 1;
-    this->buffer = new char[this->capasity];
-    ::memcpy(this->buffer, str, this->capasity);
+    m_capasity = length + 1;
+    m_buffer = new char[m_capasity];
+    ::memcpy(m_buffer, str, m_capasity);
 }
 
 __forceinline String::String(char const* str)
 {
-    this->length = ::strlen(str);
-    this->capasity = this->length + 1;
-    this->buffer = new char[this->capasity];
-    ::memcpy(this->buffer, str, this->capasity);
+    m_length = ::strlen(str);
+    m_capasity = m_length + 1;
+    m_buffer = new char[m_capasity];
+    ::memcpy(m_buffer, str, m_capasity);
 }
 
 __forceinline String::~String()
 {
-    delete [] this->buffer;
+    delete [] m_buffer;
 }
 
 template<typename T>
 __forceinline String& String::operator<<(T const& value)
 {
-    (*this) << ToString<T>(value);
-	return *this;
+    (*this) << toString<T>(value);
+    return *this;
 }
 
 template<>
 __forceinline String& String::operator<<(char const& ch)
 {
-    this->buffer[this->length] = ch;
-    ++(this->length);
-	return *this;
+    m_buffer[m_length] = ch;
+    ++m_length;
+    return *this;
 }
 
 template<>
 __forceinline String& String::operator<<(String const& text)
 {
     // todo make safe
-    ::memcpy(&this->buffer[this->length], text.GetCStr(), text.GetLength());
-    this->length += text.GetLength();
-	return *this;
+    ::memcpy(&m_buffer[m_length], text.c_str(), text.length());
+    m_length += text.length();
+    return *this;
 }
 
 __forceinline String& String::operator<<(char const* text)
 {
     // todo make safe
     size_t appendLength = ::strlen(text);
-    ::memcpy(&this->buffer[this->length], text, appendLength);
-    this->length += appendLength;
-	return *this;
+    ::memcpy(&m_buffer[m_length], text, appendLength);
+    m_length += appendLength;
+    return *this;
 }
 
-__forceinline void String::Terminate()
+__forceinline void String::terminate()
 {
-    this->buffer[this->length] = 0;
+    m_buffer[m_length] = 0;
 }
     
-__forceinline char const* String::GetCStr() const
+__forceinline char const* String::c_str() const
 {
-    return this->buffer;
+    return m_buffer;
 }
 
-__forceinline size_t String::GetLength() const
+__forceinline size_t String::length() const
 {
-    return this->length;
+    return m_length;
 }
 
 template<typename T>
-__forceinline unitos::String ToString(T const& value)
+__forceinline unitos::String toString(T const& value)
 {
-    return ToString((T*)&value);
+    return toString((T*)&value);
 }
 
 #define U_NUMBERTOSTRING(SRCTYPE, TARGETTYPE)\
     template<>\
-    __forceinline unitos::String ToString(SRCTYPE const& value)\
+    __forceinline unitos::String toString(SRCTYPE const& value)\
     {\
         unitos::String result(64);\
         TARGETTYPE val = (TARGETTYPE)(value);\
         result << val;\
-        result.Terminate();\
+        result.terminate();\
         return result;\
     }
 
@@ -150,25 +150,25 @@ __forceinline unitos::String ToString(T const& value)
 #undef U_NUMBERTOSTRING
 
 template<>
-__forceinline unitos::String ToString(bool const& value)
+__forceinline unitos::String toString(bool const& value)
 {
     unitos::String result(6);
     result << (value ? "true" : "false");
-    result.Terminate();
+    result.terminate();
     return result;
 }
 
 template<typename T>
-__forceinline unitos::String ToString(T* value)
+__forceinline unitos::String toString(T* value)
 {
-    unitos::String result(11);
+    unitos::String result(17);
     result << (int)value;
-    result.Terminate();
+    result.terminate();
     return result;
 }
 
 template<>
-__forceinline unitos::String ToString(char const* str)
+__forceinline unitos::String toString(char const* str)
 {
     return unitos::String(str);
 }

@@ -28,39 +28,39 @@ IN THE SOFTWARE.
 #include "unitos/suitetest.h"
 
 namespace unitos {
-	
+
 template<typename SuiteType,typename TestType>
 class TestRegistrator
 {
 public:
-	TestRegistrator(char const* name);
+    TestRegistrator(char const* name);
 };
 
 class Suite
 {
 public:
-	Suite();
-	virtual ~Suite();
-	virtual char const* GetName() const = 0;
+    Suite();
+    virtual ~Suite();
+    virtual char const* getName() const = 0;
 
-	bool RunTests();
-	bool RunTest(char const* name);
-	
-	void RegisterTest(char const* name, SuiteTestInfo::CreateCallback* createCallback);
+    bool runTests();
+    bool runTest(char const* name);
 
-    int TestCount() const;
-    int PassedCount() const;
-    int TestedCount() const;
+    void registerTest(char const* name, SuiteTestInfo::CreateCallback* createCallback);
 
-private:
-	SuiteTestInfo* FindTestInfo(char const* name);
-	bool RunTest(SuiteTestInfo& info);
+    int testCount() const;
+    int passedCount() const;
+    int testedCount() const;
 
 private:
-	SuiteTestInfo testInfos[256];
-	int testCount;
-    int passedCount;
-    int testedCount;
+    SuiteTestInfo* findTestInfo(char const* name);
+    bool runTest(SuiteTestInfo& info);
+
+private:
+    SuiteTestInfo m_testInfos[256];
+    int m_testCount;
+    int m_passedCount;
+    int m_testedCount;
 };
 
 } // end of unitos

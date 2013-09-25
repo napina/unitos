@@ -34,17 +34,17 @@ IN THE SOFTWARE.
 #include "unitos/check.h"
 
 #define RUN_ALL_TESTS()\
-    unitos::Framework::Get().RunAllTests();
+    unitos::Framework::get().runAllTests();
 
 #define RUN_SUITE(SuiteName)\
-    unitos::Framework::Get().RunSuiteTests(#SuiteName);
+    unitos::Framework::get().runSuiteTests(#SuiteName);
 
 #define RUN_SUITE_TEST(SuiteName, TestName)\
-    unitos::Framework::Get().RunSuiteTest(#SuiteName, #TestName);
+    unitos::Framework::get().runSuiteTest(#SuiteName, #TestName);
 
 #define REGISTER_OUTPUT(OutputType)\
     OutputType local##OutputType;\
-    unitos::Framework::Get().RegisterOutput(&local##OutputType);
+    unitos::Framework::get().registerOutput(&local##OutputType);
 
 #define TEST_SUITE(SuiteName)\
     namespace {\
@@ -52,8 +52,8 @@ IN THE SOFTWARE.
     public:\
         LocalTestSuite() : unitos::Suite() {}\
         virtual ~LocalTestSuite() {}\
-        virtual char const* GetName() const { return #SuiteName; }\
-        static LocalTestSuite& Get() { static LocalTestSuite suite; return suite; }\
+        virtual char const* getName() const { return #SuiteName; }\
+        static LocalTestSuite& get() { static LocalTestSuite suite; return suite; }\
     };}\
     namespace Suite##SuiteName
 
@@ -62,51 +62,51 @@ IN THE SOFTWARE.
     public:\
         Test_##TestName() : FixtureName() {}\
         virtual ~Test_##TestName() {}\
-        virtual void Run();\
-        virtual char const* GetName() const { return #TestName; }\
-        virtual char const* GetSuiteName() const { return LocalTestSuite::Get().GetName(); }\
-        static unitos::SuiteTest* Create() { return new Test_##TestName(); }\
+        virtual void run();\
+        virtual char const* getName() const { return #TestName; }\
+        virtual char const* getSuiteName() const { return LocalTestSuite::get().getName(); }\
+        static unitos::SuiteTest* create() { return new Test_##TestName(); }\
     };\
     static unitos::TestRegistrator<LocalTestSuite,Test_##TestName> s_test##TestName(#TestName);\
-    void Test_##TestName::Run()
+    void Test_##TestName::run()
 
 #define TEST(TestName)\
     TEST_FIXTURE(unitos::SuiteTest, TestName)
 
 #define TODO_TEST(TestName)\
-    void TODO_##TestName(void(*ReportFailure)(char const*, unitos::String const&, unitos::String const&, char const*, int))
+    void TODO_##TestName(void(*reportFailure)(char const*, unitos::String const&, unitos::String const&, char const*, int))
 #define TODO_TEST_FIXTURE(FixtureName, TestName)\
-    void TODO_##TestName(void(*ReportFailure)(char const*, unitos::String const&, char const*, int))
+    void TODO_##TestName(void(*reportFailure)(char const*, unitos::String const&, char const*, int))
 
 #define REPORT_FAILURE_MACRO(Text,TestValue,ExpectedValue)\
-    UNITOS_TRAP(); ReportFailure(Text,unitos::ToString(TestValue),unitos::ToString(ExpectedValue),__FILE__,__LINE__)
+    UNITOS_TRAP(); reportFailure(Text,unitos::toString(TestValue),unitos::toString(ExpectedValue),__FILE__,__LINE__)
 
 #define EXPECT_TEST_MACRO(Test,TestValue,ExpectedValue)\
     if(!unitos::##Test) { REPORT_FAILURE_MACRO(#Test,TestValue,ExpectedValue); return; }
 
 #define EXPECT_NULL(TestValue)\
-    EXPECT_TEST_MACRO(IsNull(TestValue),TestValue,"nullptr")
+    EXPECT_TEST_MACRO(isNull(TestValue),TestValue,"nullptr")
     
 #define EXPECT_VALID(TestValue)\
-    EXPECT_TEST_MACRO(IsValid(TestValue),TestValue,"not nullptr")
+    EXPECT_TEST_MACRO(isValid(TestValue),TestValue,"not nullptr")
 
 #define EXPECT_TRUE(TestValue)\
-    EXPECT_TEST_MACRO(IsTrue(TestValue),TestValue,"true")
+    EXPECT_TEST_MACRO(isTrue(TestValue),TestValue,"true")
 
 #define EXPECT_FALSE(TestValue)\
-    EXPECT_TEST_MACRO(IsFalse(TestValue),TestValue,"false")
+    EXPECT_TEST_MACRO(isFalse(TestValue),TestValue,"false")
 
 #define EXPECT_EQUAL(TestValue, ExpectedValue)\
-    EXPECT_TEST_MACRO(IsEqual(TestValue, ExpectedValue),TestValue,ExpectedValue)
+    EXPECT_TEST_MACRO(isEqual(TestValue, ExpectedValue),TestValue,ExpectedValue)
 
 #define EXPECT_NOTEQUAL(TestValue, ExpectedValue)\
-    EXPECT_TEST_MACRO(IsNotEqual(TestValue, ExpectedValue),TestValue,ExpectedValue)
+    EXPECT_TEST_MACRO(isNotEqual(TestValue, ExpectedValue),TestValue,ExpectedValue)
 
 #define EXPECT_CLOSE(TestValue, ExpectedValue, Tolerance)\
-    EXPECT_TEST_MACRO(IsClose(TestValue, ExpectedValue, Tolerance),TestValue,ExpectedValue)
+    EXPECT_TEST_MACRO(isClose(TestValue, ExpectedValue, Tolerance),TestValue,ExpectedValue)
 
 #define EXPECT_OK(Function)\
-    Function; if(HasFailed()) { return; }
+    Function; if(hasFailed()) { return; }
 
 #if defined(UNITOS_NO_EXCEPTIONS)
 #define EXPECT_ASSERT(SomeCode,ExpectedAssert)

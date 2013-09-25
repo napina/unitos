@@ -32,9 +32,9 @@ namespace unitos {
 class Output
 {
 public:
-	Output() {}
-	virtual ~Output() {}
-	virtual void operator<<(unitos::String const& text) = 0;
+    Output() {}
+    virtual ~Output() {}
+    virtual void operator<<(unitos::String const& text) = 0;
 };
 
 }; // end of unitos

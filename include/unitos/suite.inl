@@ -26,26 +26,26 @@ IN THE SOFTWARE.
 #define unitos_suite_inl
 
 namespace unitos {
-	
+
 template<typename SuiteType,typename TestType>
 inline TestRegistrator<SuiteType,TestType>::TestRegistrator(char const* name)
 {
-	SuiteType::Get().RegisterTest(name, TestType::Create);
+    SuiteType::get().registerTest(name, TestType::create);
 }
 
-inline int Suite::TestCount() const
+inline int Suite::testCount() const
 {
-    return this->testCount;
+    return m_testCount;
 }
 
-inline int Suite::PassedCount() const
+inline int Suite::passedCount() const
 {
-    return this->passedCount;
+    return m_passedCount;
 }
 
-inline int Suite::TestedCount() const
+inline int Suite::testedCount() const
 {
-    return this->testedCount;
+    return m_testedCount;
 }
 
 } // end of unitos

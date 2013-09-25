@@ -37,27 +37,27 @@ public:
 public:
     char const* name;
     CreateCallback* createCallback;
-    __int64 timeMicros;
+    int64_t timeMicros;
     bool hasFailed;
 };
 
 class SuiteTest
 {
 public:
-    SuiteTest() : info(0) {}
+    SuiteTest() : m_info(nullptr) {}
     virtual ~SuiteTest() {}
-    virtual void Run() = 0;
-    virtual char const* GetName() const = 0;
-    virtual char const* GetSuiteName() const = 0;
+    virtual void run() = 0;
+    virtual char const* getName() const = 0;
+    virtual char const* getSuiteName() const = 0;
 
 protected:
-    bool HasFailed() const;
-    void ReportFailure(char const* test, String const& testValue, String const& expectedValue, char const* file, int line);
-	void operator<<(unitos::String const& text);
-    
+    bool hasFailed() const;
+    void reportFailure(char const* test, String const& testValue, String const& expectedValue, char const* file, int line);
+    void operator<<(unitos::String const& text);
+
 private:
     friend class Suite;
-    unitos::SuiteTestInfo* info;
+    unitos::SuiteTestInfo* m_info;
 };
 
 } // end of unitos

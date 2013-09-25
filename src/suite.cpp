@@ -26,9 +26,9 @@ IN THE SOFTWARE.
 namespace unitos {
 
 Suite::Suite()
-    : testCount(0)
-    , passedCount(0)
-    , testedCount(0)
+    : m_testCount(0)
+    , m_passedCount(0)
+    , m_testedCount(0)
 {
     unitos::SuiteRegistrator registrator(this);
 }
@@ -37,76 +37,76 @@ Suite::~Suite()
 {
 }
 
-bool Suite::RunTests()
+bool Suite::runTests()
 {
-    for(int i = 0; i < this->testCount; ++i) {
-        SuiteTestInfo& info = this->testInfos[i];
-        RunTest(info);
+    for(int i = 0; i < m_testCount; ++i) {
+        SuiteTestInfo& info = m_testInfos[i];
+        runTest(info);
     }
-    return this->passedCount == this->testedCount;
+    return m_passedCount == m_testedCount;
 }
 
-bool Suite::RunTest(char const* name)
+bool Suite::runTest(char const* name)
 {
-    SuiteTestInfo* info = FindTestInfo(name);
+    SuiteTestInfo* info = findTestInfo(name);
     if(info) {
-        return RunTest(*info);
+        return runTest(*info);
     }
     return false;
 }
 
-bool Suite::RunTest(SuiteTestInfo& info)
+bool Suite::runTest(SuiteTestInfo& info)
 {
     SuiteTest* test = info.createCallback();
-    test->info = &info;
+    test->m_info = &info;
 #if !defined(UNITOS_NO_EXCEPTIONS)
     try {
 #endif
-        __int64 startTime = unitos::getSystemTime();
-        test->Run();
-        __int64 endTime = unitos::getSystemTime();
+        int64_t startTime = unitos::getSystemTime();
+        test->run();
+        int64_t endTime = unitos::getSystemTime();
         info.timeMicros = endTime - startTime;
 #if !defined(UNITOS_NO_EXCEPTIONS)
     } catch(...) {
-        Framework& output = Framework::Get();
+        Framework& output = Framework::get();
         unitos::String message(2048);
         message << "Exception in ";
-        message << test->GetSuiteName();
+        message << test->getSuiteName();
         message << "Suite.";
-        message << test->GetName();
+        message << test->getName();
         message << "Test\n";
-        message.Terminate();
+        message.terminate();
         output << message;
         info.hasFailed = true;
     }
 #endif
     delete test;
 
-    ++(this->testedCount);
+    ++(m_testedCount);
     if(!info.hasFailed) {
-        ++(this->passedCount);
+        ++m_passedCount;
     }
     return !info.hasFailed;
 }
 
-void Suite::RegisterTest(char const* name, SuiteTestInfo::CreateCallback* createCallback)
+void Suite::registerTest(char const* name, SuiteTestInfo::CreateCallback* createCallback)
 {
-    SuiteTestInfo& info = this->testInfos[this->testCount];
+    SuiteTestInfo& info = m_testInfos[m_testCount];
     info.name = name;
     info.createCallback = createCallback;
     info.hasFailed = false;
-    ++(this->testCount);
+    ++m_testCount;
 }
 
-SuiteTestInfo* Suite::FindTestInfo(char const* name)
+SuiteTestInfo* Suite::findTestInfo(char const* name)
 {
-    for(int i = 0; i < this->testCount; ++i) {
-        SuiteTestInfo& info = this->testInfos[i];
-        /*if(strcmp(info.name, name) == 0) */{
+    for(int i = 0; i < m_testCount; ++i) {
+        SuiteTestInfo& info = m_testInfos[i];
+        if(::strcmp(info.name, name) == 0) {
             return &info;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 }

@@ -26,7 +26,7 @@ IN THE SOFTWARE.
 #define unitos_string_h
 
 namespace unitos {
-    
+
 class String
 {
 public:
@@ -42,21 +42,21 @@ public:
     String& operator<<(float value);
     String& operator<<(long long int value);
     String& operator<<(unsigned long long int value);
-    void Terminate();
+    void terminate();
 
-    char const* GetCStr() const;
-    size_t GetLength() const;
+    char const* c_str() const;
+    size_t length() const;
 private:
-    char* buffer;
-    size_t length;
-    size_t capasity;
+    char* m_buffer;
+    size_t m_length;
+    size_t m_capasity;
 };
 
 template<typename T>
-unitos::String ToString(T const& value);
+unitos::String toString(T const& value);
 
 template<typename T>
-unitos::String ToString(T* value);
+unitos::String toString(T* value);
 
 }; // end of unitos
 

@@ -29,51 +29,51 @@ IN THE SOFTWARE.
 
 namespace unitos {
 
-__forceinline bool IsNull(void const* value)
+__forceinline bool isNull(void const* value)
 {
     return (value == nullptr);
 }
 
-__forceinline bool IsValid(void const* value)
+__forceinline bool isValid(void const* value)
 {
     return (value != nullptr);
 }
 
-__forceinline bool IsTrue(bool value)
+__forceinline bool isTrue(bool value)
 {
     return value == true;
 }
 
-__forceinline bool IsFalse(bool value)
+__forceinline bool isFalse(bool value)
 {
     return value == false;
 }
 
 template<typename T,typename T2>
-bool IsSame()
+__forceinline bool isSame()
 {
     return T == T2;
 }
 
 template<typename T,typename T2>
-__forceinline bool IsEqual(T const& value, T2 const& otherValue)
+__forceinline bool isEqual(T const& value, T2 const& otherValue)
 {
     return (value == otherValue);
 }
 
-__forceinline bool IsEqual(char const* str, char const* otherStr)
+__forceinline bool isEqual(char const* str, char const* otherStr)
 {
     return ::strcmp(str, otherStr) == 0;
 }
 
 template<typename T,typename T2>
-__forceinline bool IsNotEqual(T const& value, T2 const& otherValue)
+__forceinline bool isNotEqual(T const& value, T2 const& otherValue)
 {
     return (value != otherValue);
 }
 
 template<typename T, typename T2>
-__forceinline bool IsClose(T const& value, T const& otherValue, T2 tolerance)
+__forceinline bool isClose(T const& value, T const& otherValue, T2 tolerance)
 {
     T diff = value - otherValue;
     return (diff >= -tolerance) && (diff <= tolerance);

@@ -27,26 +27,26 @@ IN THE SOFTWARE.
 
 namespace unitos {
 
-bool IsNull(void const* value);
-bool IsValid(void const* value);
-bool IsTrue(bool value);
-bool IsFalse(bool value);
+bool isNull(void const* value);
+bool isValid(void const* value);
+bool isTrue(bool value);
+bool isFalse(bool value);
 
 template<typename T,typename T2>
-bool IsSame();
+bool isSame();
 
 template<typename T,typename T2>
-bool IsEqual(T const& value, T2 const& otherValue);
+bool isEqual(T const& value, T2 const& otherValue);
 
-bool IsEqual(char const* str, char const* otherStr);
+bool isEqual(char const* str, char const* otherStr);
 
 template<typename T,typename T2>
-bool IsNotEqual(T const& value, T2 const& otherValue);
+bool isNotEqual(T const& value, T2 const& otherValue);
 
-bool IsNotEqual(char const* str, char const* otherStr);
+bool isNotEqual(char const* str, char const* otherStr);
 
 template<typename T, typename T2>
-bool IsClose(T const& value, T const& otherValue, T2 tolerance);
+bool isClose(T const& value, T const& otherValue, T2 tolerance);
 
 }; // end of unitos
 

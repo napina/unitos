@@ -67,14 +67,16 @@ IN THE SOFTWARE.
 #	define __forceinline inline
 #endif
 
-#if !defined(__UNITOS_WINDOWS__)
-typedef signed long long __int64;
+#if defined(__UNITOS_WINDOWS__)
+typedef __int64 int64_t;
+#else
+typedef signed long long int64_t;
 #endif
 
 namespace unitos {
 
 bool isDebuggerConnected();
-__int64 getSystemTime();
+int64_t getSystemTime();
 
 }
 
