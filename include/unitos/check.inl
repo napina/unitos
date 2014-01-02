@@ -61,6 +61,12 @@ __forceinline bool isEqual(T const& value, T2 const& otherValue)
     return (value == otherValue);
 }
 
+template<typename T>
+__forceinline bool isEqual(T const& value, std::nullptr_t)
+{
+    return (value == nullptr);
+}
+
 __forceinline bool isEqual(char const* str, char const* otherStr)
 {
     return ::strcmp(str, otherStr) == 0;
