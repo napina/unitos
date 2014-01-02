@@ -22,14 +22,14 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #include "unitos/platform.h"
-#if defined(__UNITOS_MACOSX__)
+#if defined(UNITOS_MACOSX)
 #include <mach/mach_time.h>
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <unistd.h>
-#elif defined(__UNITOS_WINDOWS__)
+#elif defined(UNITOS_WINDOWS)
 #include <windows.h>
-#elif defined(__UNITOS_LINUX__)
+#elif defined(UNITOS_LINUX)
 #include <sys/ptrace.h>
 #endif
 
@@ -37,7 +37,7 @@ namespace unitos {
 
 bool isDebuggerConnected()
 {
-#if defined(__UNITOS_MACOSX__)
+#if defined(UNITOS_MACOSX)
     // From Technical Q&A QA1361
     // Returns true if the current process is being debugged (either running
     // under the debugger or has a debugger attached post facto).
@@ -60,9 +60,9 @@ bool isDebuggerConnected()
     junk = ::sysctl(mib, sizeof(mib) / sizeof(*mib), &info, &size, NULL, 0);
 
     return (info.kp_proc.p_flag & P_TRACED) != 0;
-#elif defined(__UNITOS_WINDOWS__)
+#elif defined(UNITOS_WINDOWS)
     return ::IsDebuggerPresent() == TRUE;
-#elif defined(__UNITOS_LINUX__)
+#elif defined(UNITOS_LINUX)
     return ::ptrace(PTRACE_TRACEME, 0, NULL, 0) == -1;
 #else
     #error isDebuggerConnected not implemented for current platform
@@ -72,7 +72,7 @@ bool isDebuggerConnected()
 
 int64_t getSystemTime()
 {
-#if defined(__UNITOS_WINDOWS__)
+#if defined(UNITOS_WINDOWS)
     static int64_t start = 0;
     static int64_t frequency = 0;
     static double timeToMilliseconds = 0.0;
@@ -89,7 +89,7 @@ int64_t getSystemTime()
     ::QueryPerformanceCounter((LARGE_INTEGER*)&counter);
     diff = counter - start;
     return (int64_t)(diff * timeToMilliseconds);
-#elif defined(__UNITOS_MACOSX__)
+#elif defined(UNITOS_MACOSX)
     static int64_t start = 0;
     static double timeToMilliseconds = 0.0;
     int64_t counter = 0;

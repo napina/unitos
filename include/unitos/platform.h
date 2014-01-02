@@ -26,32 +26,32 @@ IN THE SOFTWARE.
 #define unitos_platform_h
 
 #if defined(__linux__) && defined(__ELF__)
-#   define __UNITOS_LINUX__ (1)
-#   define __UNITOS_ARCH32__ (1)
+#   define UNITOS_LINUX (1)
+#   define UNITOS_ARCH32 (1)
 #elif defined(__APPLE__) && defined(__MACH__)
-#   define __UNITOS_MACOSX__ (1)
-#   define __UNITOS_ARCH32__ (1)
+#   define UNITOS_MACOSX (1)
+#   define UNITOS_ARCH32 (1)
 #elif defined(_WIN64) || defined(_M_X64)
-#   define __UNITOS_WINDOWS__ (1)
-#   define __UNITOS_ARCH64__ (1)
+#   define UNITOS_WINDOWS (1)
+#   define UNITOS_ARCH64 (1)
 #elif defined(_WIN32) || defined(_M_IX86)
-#   define __UNITOS_WINDOWS__ (1)
-#   define __UNITOS_ARCH32__ (1)
+#   define UNITOS_WINDOWS (1)
+#   define UNITOS_ARCH32 (1)
 #else
 #error Could not determine your operating system in platform.h
 #endif
 
-#if defined(__UNITOS_WINDOWS__)
+#if defined(UNITOS_WINDOWS)
 #   ifndef WIN32_LEAN_AND_MEAN
 #       define WIN32_LEAN_AND_MEAN
 #   endif
 #endif
 
-#if defined(__UNITOS_WINDOWS__)
+#if defined(UNITOS_WINDOWS)
 #   define UNITOS_TRAP() if(unitos::isDebuggerConnected()) { __debugbreak(); }
-#elif defined(__UNITOS_LINUX__)
+#elif defined(UNITOS_LINUX)
 #   define UNITOS_TRAP() if(unitos::isDebuggerConnected()) {  __asm { int 3 }; }
-#elif defined(__UNITOS_MACOSX__)
+#elif defined(UNITOS_MACOSX)
 #   if defined(__arm__)
 #       define UNITOS_TRAP() if(unitos::isDebuggerConnected()) { __asm__ volatile("bkpt 0"); }
 #   else
@@ -63,11 +63,11 @@ IN THE SOFTWARE.
 
 #if defined(__GNUC__)
 #	define __forceinline inline __attribute__((always_inline))
-#elif !defined(__UNITOS_WINDOWS__) && !defined(__forceinline)
+#elif !defined(UNITOS_WINDOWS) && !defined(__forceinline)
 #	define __forceinline inline
 #endif
 
-#if defined(__UNITOS_WINDOWS__)
+#if defined(UNITOS_WINDOWS)
 typedef __int64 int64_t;
 #else
 typedef signed long long int64_t;

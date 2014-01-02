@@ -122,14 +122,14 @@ __forceinline size_t String::length() const
 }
 
 template<typename T>
-__forceinline unitos::String toString(T const& value)
+inline unitos::String toString(T const& value)
 {
     return toString((T*)&value);
 }
 
 #define U_NUMBERTOSTRING(SRCTYPE, TARGETTYPE)\
     template<>\
-    __forceinline unitos::String toString(SRCTYPE const& value)\
+    inline unitos::String toString(SRCTYPE const& value)\
     {\
         unitos::String result(64);\
         TARGETTYPE val = (TARGETTYPE)(value);\
@@ -150,7 +150,7 @@ __forceinline unitos::String toString(T const& value)
 #undef U_NUMBERTOSTRING
 
 template<>
-__forceinline unitos::String toString(bool const& value)
+inline unitos::String toString(bool const& value)
 {
     unitos::String result(6);
     result << (value ? "true" : "false");
@@ -171,7 +171,7 @@ inline unitos::String toString(T* value)
 }
 
 template<>
-__forceinline unitos::String toString(char const* str)
+inline unitos::String toString(char const* str)
 {
     return unitos::String(str);
 }

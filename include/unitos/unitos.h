@@ -76,7 +76,7 @@ IN THE SOFTWARE.
 #define TODO_TEST(TestName)\
     void TODO_##TestName(void(*reportFailure)(char const*, unitos::String const&, unitos::String const&, char const*, int))
 #define TODO_TEST_FIXTURE(FixtureName, TestName)\
-    void TODO_##TestName(void(*reportFailure)(char const*, unitos::String const&, char const*, int))
+    void TODO_##TestName(void(*reportFailure)(char const*, unitos::String const&, unitos::String const&, char const*, int))
 
 #define REPORT_FAILURE_MACRO(Text,TestValue,ExpectedValue)\
     UNITOS_TRAP(); reportFailure(Text,unitos::toString(TestValue),unitos::toString(ExpectedValue),__FILE__,__LINE__)
