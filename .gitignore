@@ -43,3 +43,4 @@
 # filter folders
 samples/
 build/
+lib/

@@ -16,10 +16,17 @@ project "unitos"
 	warnings "Extra"
 
 	configuration "Debug"
-		defines { "DEBUG" }
+		defines { "DEBUG", "_ITERATOR_DEBUG_LEVEL=0" }
 		flags { "Symbols" }
+		targetsuffix "_d"
 
 	configuration "Release"
 		defines { "NDEBUG" }
 		flags { "NoRuntimeChecks" }
 		optimize "Speed"
+		targetsuffix "r"
+
+	configuration "x32"
+		targetname "unitos_x32"
+	configuration "x64"
+		targetsuffix "unitos_x64"
