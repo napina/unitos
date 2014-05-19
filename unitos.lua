@@ -11,6 +11,7 @@ project "unitos"
 	objdir( "build/" .. _ACTION )
 	location( "build/" .. _ACTION )
 	targetdir "lib"
+	targetname "%{prj.name}_%{cfg.platform}"
 	
 	flags { "FatalWarnings", "NoBufferSecurityCheck", "NoEditAndContinue", "NoIncrementalLink", "NoPCH", "NoRTTI" }
 	warnings "Extra"
@@ -24,9 +25,4 @@ project "unitos"
 		defines { "NDEBUG" }
 		flags { "NoRuntimeChecks" }
 		optimize "Speed"
-		targetsuffix "r"
-
-	configuration "x32"
-		targetname "unitos_x32"
-	configuration "x64"
-		targetsuffix "unitos_x64"
+		targetsuffix "_r"
