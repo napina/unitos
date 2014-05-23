@@ -22,6 +22,7 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #include "unitos/unitos.h"
+#include <string>
 
 namespace unitos {
 
@@ -108,14 +109,19 @@ String& String::operator<<(unsigned long long int value)
     return *this;
 }
 
-/*int String::ComputeLength(char const* text)
+size_t strlen(char const* str)
 {
-    int length = 0;
-    while(*text != 0) {
-        ++text;
-        ++length;
-    }
-    return length;
-}*/
+    return ::strlen(str);
+}
+
+int compare(char const* str, char const* otherStr)
+{
+    return ::strcmp(str, otherStr);
+}
+
+void memcopy(void* dest, void const* src, size_t size)
+{
+    ::memcpy(dest, src, size);
+}
 
 }
