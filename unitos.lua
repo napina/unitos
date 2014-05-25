@@ -11,6 +11,7 @@ project "unitos"
 	objdir( "build/" .. _ACTION )
 	location( "build/" .. _ACTION )
 	targetdir "lib"
+	targetname "%{prj.name}_%{cfg.platform}"
 	
 	flags { "FatalWarnings", "NoBufferSecurityCheck", "NoEditAndContinue", "NoIncrementalLink", "NoPCH", "NoRTTI" }
 	warnings "Extra"

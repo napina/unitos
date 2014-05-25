@@ -26,7 +26,6 @@ IN THE SOFTWARE.
 #define unitos_string_inl
 
 #include "unitos/platform.h"
-#include <string.h>
 
 namespace unitos {
 
@@ -47,7 +46,7 @@ __forceinline String::String(String const& other)
     m_length = other.m_length;
     m_capasity = other.m_length + 1;
     m_buffer = new char[m_capasity];
-    ::memcpy(m_buffer, other.m_buffer, m_capasity);
+    unitos::memcopy(m_buffer, other.m_buffer, m_capasity);
 }
 
 __forceinline String::String(char const* str, size_t length)
@@ -57,15 +56,15 @@ __forceinline String::String(char const* str, size_t length)
 {
     m_capasity = length + 1;
     m_buffer = new char[m_capasity];
-    ::memcpy(m_buffer, str, m_capasity);
+    unitos::memcopy(m_buffer, str, m_capasity);
 }
 
 __forceinline String::String(char const* str)
 {
-    m_length = ::strlen(str);
+    m_length = unitos::strlen(str);
     m_capasity = m_length + 1;
     m_buffer = new char[m_capasity];
-    ::memcpy(m_buffer, str, m_capasity);
+    unitos::memcopy(m_buffer, str, m_capasity);
 }
 
 __forceinline String::~String()
@@ -92,7 +91,7 @@ template<>
 __forceinline String& String::operator<<(String const& text)
 {
     // todo make safe
-    ::memcpy(&m_buffer[m_length], text.c_str(), text.length());
+    unitos::memcopy(&m_buffer[m_length], text.c_str(), text.length());
     m_length += text.length();
     return *this;
 }
@@ -100,8 +99,8 @@ __forceinline String& String::operator<<(String const& text)
 __forceinline String& String::operator<<(char const* text)
 {
     // todo make safe
-    size_t appendLength = ::strlen(text);
-    ::memcpy(&m_buffer[m_length], text, appendLength);
+    size_t appendLength = unitos::strlen(text);
+    unitos::memcopy(&m_buffer[m_length], text, appendLength);
     m_length += appendLength;
     return *this;
 }

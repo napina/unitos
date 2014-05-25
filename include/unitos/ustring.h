@@ -58,6 +58,10 @@ unitos::String toString(T const& value);
 template<typename T>
 unitos::String toString(T* value);
 
+size_t strlen(char const* str);
+int compare(char const* str, char const* otherStr);
+void memcopy(void* dest, void const* src, size_t size);
+
 }; // end of unitos
 
 #include "unitos/ustring.inl"

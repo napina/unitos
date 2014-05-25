@@ -102,7 +102,7 @@ SuiteTestInfo* Suite::findTestInfo(char const* name)
 {
     for(int i = 0; i < m_testCount; ++i) {
         SuiteTestInfo& info = m_testInfos[i];
-        if(::strcmp(info.name, name) == 0) {
+        if(unitos::compare(info.name, name) == 0) {
             return &info;
         }
     }

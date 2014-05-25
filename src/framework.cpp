@@ -99,7 +99,7 @@ void Framework::registerSuite(unitos::Suite* suite)
 unitos::Suite* Framework::findSuite(char const* name)
 {
     for(int i = 0; i < m_suiteCount; ++i) {
-        if(::strcmp(m_suites[i]->getName(), name) == 0) {
+        if(unitos::compare(m_suites[i]->getName(), name) == 0) {
             return m_suites[i];
         }
     }

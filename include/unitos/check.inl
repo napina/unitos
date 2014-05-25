@@ -25,7 +25,7 @@ IN THE SOFTWARE.
 #ifndef unitos_check_inl
 #define unitos_check_inl
 
-#include "string.h"
+#include "ustring.h"
 
 namespace unitos {
 
@@ -69,7 +69,7 @@ __forceinline bool isEqual(T const& value, std::nullptr_t)
 
 __forceinline bool isEqual(char const* str, char const* otherStr)
 {
-    return ::strcmp(str, otherStr) == 0;
+    return unitos::compare(str, otherStr) == 0;
 }
 
 template<typename T,typename T2>
