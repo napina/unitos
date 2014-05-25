@@ -24,5 +24,5 @@ project "unitos"
 	configuration "Release"
 		defines { "NDEBUG" }
 		flags { "NoRuntimeChecks" }
-		targetsuffix "_r"
 		optimize "Speed"
+		targetsuffix "_r"
