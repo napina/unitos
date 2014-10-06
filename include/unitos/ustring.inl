@@ -29,7 +29,7 @@ IN THE SOFTWARE.
 
 namespace unitos {
 
-__forceinline String::String(int capasity)
+inline String::String(size_t capasity)
     : m_buffer(nullptr)
     , m_capasity(capasity)
     , m_length(0)
@@ -38,7 +38,7 @@ __forceinline String::String(int capasity)
     m_buffer[0] = 0;
 }
 
-__forceinline String::String(String const& other)
+inline String::String(String const& other)
     : m_buffer(nullptr)
     , m_length(0)
     , m_capasity(0)
@@ -73,7 +73,7 @@ __forceinline String::~String()
 }
 
 template<typename T>
-__forceinline String& String::operator<<(T const& value)
+inline String& String::operator<<(T const& value)
 {
     (*this) << toString<T>(value);
     return *this;
@@ -88,7 +88,7 @@ __forceinline String& String::operator<<(char const& ch)
 }
 
 template<>
-__forceinline String& String::operator<<(String const& text)
+inline String& String::operator<<(String const& text)
 {
     // todo make safe
     unitos::memcopy(&m_buffer[m_length], text.c_str(), text.length());
@@ -96,7 +96,7 @@ __forceinline String& String::operator<<(String const& text)
     return *this;
 }
 
-__forceinline String& String::operator<<(char const* text)
+inline String& String::operator<<(char const* text)
 {
     // todo make safe
     size_t appendLength = unitos::strlen(text);
@@ -131,8 +131,7 @@ inline unitos::String toString(T const& value)
     inline unitos::String toString(SRCTYPE const& value)\
     {\
         unitos::String result(64);\
-        TARGETTYPE val = (TARGETTYPE)(value);\
-        result << val;\
+        result << (TARGETTYPE)(value);\
         result.terminate();\
         return result;\
     }

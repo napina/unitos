@@ -30,7 +30,7 @@ namespace unitos {
 class String
 {
 public:
-    String(int capasity);
+    String(size_t capasity);
     String(String const& other);
     String(char const* str, size_t length);
     explicit String(char const* str);
