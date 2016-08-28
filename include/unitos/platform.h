@@ -68,14 +68,17 @@ IN THE SOFTWARE.
 #endif
 
 #if defined(UNITOS_WINDOWS)
-typedef __int64 int64_t;
+typedef signed __int64 int64_t;
+typedef unsigned __int64 uint64_t;
 #elif defined(UNITOS_MACOSX)
 #   include <stddef.h>
 #   include <inttypes.h>
-typedef decltype(nullptr) nullptr_t;
 #else
 typedef signed long long int64_t;
+typedef unsigned long long uint64_t;
 #endif
+
+typedef decltype(nullptr) nullptr_t;
 
 namespace unitos {
 
