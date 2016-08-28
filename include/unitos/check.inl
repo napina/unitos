@@ -49,11 +49,11 @@ __forceinline bool isFalse(bool value)
     return value == false;
 }
 
-template<typename T,typename T2>
+/*template<typename T,typename T2>
 __forceinline bool isSame()
 {
-    return T == T2;
-}
+    return decltype(T) == decltype(T2);
+}*/
 
 template<typename T,typename T2>
 __forceinline bool isEqual(T const& value, T2 const& otherValue)
@@ -62,7 +62,7 @@ __forceinline bool isEqual(T const& value, T2 const& otherValue)
 }
 
 template<typename T>
-__forceinline bool isEqual(T const& value, std::nullptr_t)
+__forceinline bool isEqual(T const& value, nullptr_t)
 {
     return (value == nullptr);
 }

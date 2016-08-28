@@ -69,6 +69,10 @@ IN THE SOFTWARE.
 
 #if defined(UNITOS_WINDOWS)
 typedef __int64 int64_t;
+#elif defined(UNITOS_MACOSX)
+#   include <stddef.h>
+#   include <inttypes.h>
+typedef decltype(nullptr) nullptr_t;
 #else
 typedef signed long long int64_t;
 #endif

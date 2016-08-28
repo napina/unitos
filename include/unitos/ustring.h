@@ -40,8 +40,8 @@ public:
     String& operator<<(T const& value);
     String& operator<<(char const* value);
     String& operator<<(float value);
-    String& operator<<(long long int value);
-    String& operator<<(unsigned long long int value);
+    String& operator<<(int64_t value);
+    String& operator<<(uint64_t value);
     void terminate();
 
     char const* c_str() const;
@@ -62,7 +62,7 @@ size_t strlen(char const* str);
 int compare(char const* str, char const* otherStr);
 void memcopy(void* dest, void const* src, size_t size);
 
-}; // end of unitos
+} // end of unitos
 
 #include "unitos/ustring.inl"
 

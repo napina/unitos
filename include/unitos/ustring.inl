@@ -31,8 +31,8 @@ namespace unitos {
 
 inline String::String(size_t capasity)
     : m_buffer(nullptr)
-    , m_capasity(capasity)
     , m_length(0)
+    , m_capasity(capasity)
 {
     m_buffer = new char[capasity];
     m_buffer[0] = 0;
