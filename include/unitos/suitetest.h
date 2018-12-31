@@ -22,46 +22,47 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #pragma once
-#ifndef unitos_suitetest_h
-#define unitos_suitetest_h
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
 class Suite;
 class SuiteTest;
+//----------------------------------------------------------------------------
 
 class SuiteTestInfo
 {
 public:
-    typedef unitos::SuiteTest* (CreateCallback)();
+	typedef unitos::SuiteTest* (CreateCallback)();
 public:
-    char const* name;
-    CreateCallback* createCallback;
-    int64_t timeMicros;
-    bool hasFailed;
+	char const* name;
+	CreateCallback* createCallback;
+	int64_t timeMicros;
+	bool hasFailed;
 };
+//----------------------------------------------------------------------------
 
 class SuiteTest
 {
 public:
-    SuiteTest() : m_info(nullptr) {}
-    virtual ~SuiteTest() {}
-    virtual void run() = 0;
-    virtual char const* getName() const = 0;
-    virtual char const* getSuiteName() const = 0;
+	SuiteTest() : m_info(nullptr) {}
+	virtual ~SuiteTest() {}
+	virtual void run() = 0;
+	virtual char const* getName() const = 0;
+	virtual char const* getSuiteName() const = 0;
 
 protected:
-    bool hasFailed() const;
-    void reportFailure(char const* test, String const& testValue, String const& expectedValue, char const* file, int line);
-    void operator<<(unitos::String const& text);
+	bool hasFailed() const;
+	void reportFailure(char const* test, String const& testValue, String const& expectedValue, char const* file, int line);
+	void operator<<(unitos::String const& text);
 
 private:
-    friend class Suite;
-    unitos::SuiteTestInfo* m_info;
+	friend class Suite;
+	unitos::SuiteTestInfo* m_info;
 };
+//----------------------------------------------------------------------------
 
 } // end of unitos
 
 #include "unitos/suitetest.inl"
-
-#endif
+//----------------------------------------------------------------------------

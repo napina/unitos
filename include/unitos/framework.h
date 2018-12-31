@@ -22,50 +22,50 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #pragma once
-#ifndef unitos_framework_h
-#define unitos_framework_h
 
 #include "unitos/ustring.h"
+//----------------------------------------------------------------------------
 
 namespace unitos {
-    
+
 class Suite;
 class SuiteTest;
 class Output;
-    
+//----------------------------------------------------------------------------
+
 class Framework
 {
 public:
-    Framework();
-    ~Framework();
-    
-    void registerOutput(unitos::Output* handler);
-    
-    void runAllTests();
-    void runSuiteTests(char const* suiteName);
-    void runSuiteTest(char const* suiteName, char const* testName);
-    
-    void operator<<(unitos::String const& text);
-    static Framework& get();
-    
-private:
-    friend class SuiteRegistrator;
-    void registerSuite(unitos::Suite* suite);
-    unitos::Suite* findSuite(char const* name);
+	Framework();
+	~Framework();
+
+	void registerOutput(unitos::Output* handler);
+
+	void runAllTests();
+	void runSuiteTests(char const* suiteName);
+	void runSuiteTest(char const* suiteName, char const* testName);
+
+	void operator<<(unitos::String const& text);
+	static Framework& get();
 
 private:
-    unitos::Suite* m_suites[256];
-    unitos::Output* m_outputs[8];
-    int m_suiteCount;
-    int m_outputCount;
+	friend class SuiteRegistrator;
+	void registerSuite(unitos::Suite* suite);
+	unitos::Suite* findSuite(char const* name);
+
+private:
+	unitos::Suite* m_suites[256];
+	unitos::Output* m_outputs[8];
+	int m_suiteCount;
+	int m_outputCount;
 };
+//----------------------------------------------------------------------------
 
 class SuiteRegistrator
 {
 public:
-    SuiteRegistrator(unitos::Suite* suite);
+	SuiteRegistrator(unitos::Suite* suite);
 };
+//----------------------------------------------------------------------------
 
 }; // end of unitos
-
-#endif

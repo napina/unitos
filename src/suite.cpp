@@ -21,92 +21,101 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 
 =============================================================================*/
+
 #include "unitos/unitos.h"
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
 Suite::Suite()
-    : m_testCount(0)
-    , m_passedCount(0)
-    , m_testedCount(0)
+	: m_testCount(0)
+	, m_passedCount(0)
+	, m_testedCount(0)
 {
-    unitos::SuiteRegistrator registrator(this);
+	unitos::SuiteRegistrator registrator(this);
 }
+//----------------------------------------------------------------------------
 
 Suite::~Suite()
 {
 }
+//----------------------------------------------------------------------------
 
 bool Suite::runTests()
 {
-    for(int i = 0; i < m_testCount; ++i) {
-        SuiteTestInfo& info = m_testInfos[i];
-        runTest(info);
-    }
-    return m_passedCount == m_testedCount;
+	for(int i = 0; i < m_testCount; ++i) {
+		SuiteTestInfo& info = m_testInfos[i];
+		runTest(info);
+	}
+	return m_passedCount == m_testedCount;
 }
+//----------------------------------------------------------------------------
 
 bool Suite::runTest(char const* name)
 {
-    SuiteTestInfo* info = findTestInfo(name);
-    if(info) {
-        return runTest(*info);
-    }
-    return false;
+	SuiteTestInfo* info = findTestInfo(name);
+	if(info) {
+		return runTest(*info);
+	}
+	return false;
 }
+//----------------------------------------------------------------------------
 
 bool Suite::runTest(SuiteTestInfo& info)
 {
-    SuiteTest* test = info.createCallback();
-    test->m_info = &info;
+	SuiteTest* test = info.createCallback();
+	test->m_info = &info;
 #if !defined(UNITOS_NO_EXCEPTIONS)
-    try {
+	try {
 #endif
-        int64_t startTime = unitos::getSystemTime();
-        test->run();
-        int64_t endTime = unitos::getSystemTime();
-        info.timeMicros = endTime - startTime;
+		int64_t startTime = unitos::getSystemTime();
+		test->run();
+		int64_t endTime = unitos::getSystemTime();
+		info.timeMicros = endTime - startTime;
 #if !defined(UNITOS_NO_EXCEPTIONS)
-    } catch(...) {
-        Framework& output = Framework::get();
-        unitos::String message(2048);
-        message << "Exception in ";
-        message << test->getSuiteName();
-        message << "Suite.";
-        message << test->getName();
-        message << "Test\n";
-        message.terminate();
-        output << message;
-        info.hasFailed = true;
-    }
+	} catch(...) {
+		Framework& output = Framework::get();
+		unitos::String message(2048);
+		message << "Exception in ";
+		message << test->getSuiteName();
+		message << "Suite.";
+		message << test->getName();
+		message << "Test\n";
+		message.terminate();
+		output << message;
+		info.hasFailed = true;
+	}
 #endif
-    delete test;
+	delete test;
 
-    ++(m_testedCount);
-    if(!info.hasFailed) {
-        ++m_passedCount;
-    }
-    return !info.hasFailed;
+	++(m_testedCount);
+	if(!info.hasFailed) {
+		++m_passedCount;
+	}
+	return !info.hasFailed;
 }
+//----------------------------------------------------------------------------
 
 void Suite::registerTest(char const* name, SuiteTestInfo::CreateCallback* createCallback)
 {
-    SuiteTestInfo& info = m_testInfos[m_testCount];
-    info.name = name;
-    info.createCallback = createCallback;
-    info.hasFailed = false;
-    ++m_testCount;
+	SuiteTestInfo& info = m_testInfos[m_testCount];
+	info.name = name;
+	info.createCallback = createCallback;
+	info.hasFailed = false;
+	++m_testCount;
 }
+//----------------------------------------------------------------------------
 
 SuiteTestInfo* Suite::findTestInfo(char const* name)
 {
-    for(int i = 0; i < m_testCount; ++i) {
-        SuiteTestInfo& info = m_testInfos[i];
-        if(unitos::compare(info.name, name) == 0) {
-            return &info;
-        }
-    }
-    return nullptr;
+	for(int i = 0; i < m_testCount; ++i) {
+		SuiteTestInfo& info = m_testInfos[i];
+		if(unitos::compare(info.name, name) == 0) {
+			return &info;
+		}
+	}
+	return nullptr;
 }
+//----------------------------------------------------------------------------
 
-}
+} // end of unitos

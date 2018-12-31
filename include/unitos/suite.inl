@@ -22,32 +22,33 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #pragma once
-#ifndef unitos_suite_inl
-#define unitos_suite_inl
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
 template<typename SuiteType,typename TestType>
 inline TestRegistrator<SuiteType,TestType>::TestRegistrator(char const* name)
 {
-    SuiteType::get().registerTest(name, TestType::create);
+	SuiteType::get().registerTest(name, TestType::create);
 }
+//----------------------------------------------------------------------------
 
 inline int Suite::testCount() const
 {
-    return m_testCount;
+	return m_testCount;
 }
+//----------------------------------------------------------------------------
 
 inline int Suite::passedCount() const
 {
-    return m_passedCount;
+	return m_passedCount;
 }
+//----------------------------------------------------------------------------
 
 inline int Suite::testedCount() const
 {
-    return m_testedCount;
+	return m_testedCount;
 }
+//----------------------------------------------------------------------------
 
 } // end of unitos
-
-#endif

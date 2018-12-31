@@ -22,8 +22,7 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #pragma once
-#ifndef unitos_check_h
-#define unitos_check_h
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
@@ -51,5 +50,4 @@ bool isClose(T const& value, T const& otherValue, T2 tolerance);
 }; // end of unitos
 
 #include "unitos/check.inl"
-
-#endif
+//----------------------------------------------------------------------------

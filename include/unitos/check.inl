@@ -22,69 +22,82 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #pragma once
-#ifndef unitos_check_inl
-#define unitos_check_inl
 
 #include "ustring.h"
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
 __forceinline bool isNull(void const* value)
 {
-    return (value == nullptr);
+	return (value == nullptr);
 }
+//----------------------------------------------------------------------------
 
 __forceinline bool isValid(void const* value)
 {
-    return (value != nullptr);
+	return (value != nullptr);
 }
+//----------------------------------------------------------------------------
 
 __forceinline bool isTrue(bool value)
 {
-    return value == true;
+	return value == true;
 }
+//----------------------------------------------------------------------------
 
 __forceinline bool isFalse(bool value)
 {
-    return value == false;
+	return value == false;
 }
+//----------------------------------------------------------------------------
 
-/*template<typename T,typename T2>
+template<typename T,typename T2>
 __forceinline bool isSame()
 {
-    return decltype(T) == decltype(T2);
-}*/
+	return decltype(T) == decltype(T2);
+}
+//----------------------------------------------------------------------------
 
 template<typename T,typename T2>
 __forceinline bool isEqual(T const& value, T2 const& otherValue)
 {
-    return (value == otherValue);
+	return (value == otherValue);
 }
+//----------------------------------------------------------------------------
 
 template<typename T>
 __forceinline bool isEqual(T const& value, nullptr_t)
 {
-    return (value == nullptr);
+	return (value == nullptr);
 }
+//----------------------------------------------------------------------------
 
 __forceinline bool isEqual(char const* str, char const* otherStr)
 {
-    return unitos::compare(str, otherStr) == 0;
+	return unitos::compare(str, otherStr) == 0;
 }
+//----------------------------------------------------------------------------
 
 template<typename T,typename T2>
 __forceinline bool isNotEqual(T const& value, T2 const& otherValue)
 {
-    return (value != otherValue);
+	return (value != otherValue);
 }
+//----------------------------------------------------------------------------
+
+__forceinline bool isNotEqual(char const* str, char const* otherStr)
+{
+	return unitos::compare(str, otherStr) != 0;
+}
+//----------------------------------------------------------------------------
 
 template<typename T, typename T2>
 __forceinline bool isClose(T const& value, T const& otherValue, T2 tolerance)
 {
-    T diff = value - otherValue;
-    return (diff >= -tolerance) && (diff <= tolerance);
+	T diff = value - otherValue;
+	return (diff >= -tolerance) && (diff <= tolerance);
 }
+//----------------------------------------------------------------------------
 
 } // end of unitos
-
-#endif

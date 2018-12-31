@@ -22,42 +22,42 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #pragma once
-#ifndef unitos_suitetest_inl
-#define unitos_suitetest_inl
 
 #include "unitos/framework.h"
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
 __forceinline bool SuiteTest::hasFailed() const
 {
-    return m_info->hasFailed;
+	return m_info->hasFailed;
 }
+//----------------------------------------------------------------------------
 
 inline void SuiteTest::reportFailure(char const* test, String const& testValue, String const& expectedValue, char const* file, int line)
 {
-    unitos::String message(2048);
-    message << file;
+	unitos::String message(2048);
+	message << file;
 #if defined(__APPLE__) || defined(__GNUG__)
-    message << ":" << line;
+	message << ":" << line;
 #else
-    message << "(" << line << ")";
+	message << "(" << line << ")";
 #endif
-    message << ": Error " << getSuiteName() << "Suite." << getName() << "Test: failed";
-    message << "\nExpectation: " << test;
-    message << "\nExpected Value: " << expectedValue;
-    message << "\nTest Value: " << testValue << "\n";
-    message.terminate();
-    *this << message;
+	message << ": Error " << getSuiteName() << "Suite." << getName() << "Test: failed";
+	message << "\nExpectation: " << test;
+	message << "\nExpected Value: " << expectedValue;
+	message << "\nTest Value: " << testValue << "\n";
+	message.terminate();
+	*this << message;
 
-    m_info->hasFailed = true;
+	m_info->hasFailed = true;
 }
+//----------------------------------------------------------------------------
 
 __forceinline void SuiteTest::operator<<(unitos::String const& text)
 {
-    Framework::get() << text;
+	Framework::get() << text;
 }
+//----------------------------------------------------------------------------
 
 } // end of unitos
-
-#endif

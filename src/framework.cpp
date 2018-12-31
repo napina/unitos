@@ -21,7 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 IN THE SOFTWARE.
 
 =============================================================================*/
+
 #include "unitos/unitos.h"
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
@@ -30,10 +32,12 @@ Framework::Framework()
     , m_outputCount(0)
 {
 }
+//----------------------------------------------------------------------------
 
 Framework::~Framework()
 {
 }
+//----------------------------------------------------------------------------
 
 void Framework::runAllTests()
 {
@@ -74,6 +78,7 @@ void Framework::runAllTests()
     }
     *this << unitos::String("=======================================\n");
 }
+//----------------------------------------------------------------------------
 
 void Framework::runSuiteTests(char const* name)
 {
@@ -82,12 +87,14 @@ void Framework::runSuiteTests(char const* name)
         suite->runTests();
     }
 }
+//----------------------------------------------------------------------------
 
 void Framework::registerOutput(unitos::Output* output)
 {
     m_outputs[m_outputCount] = output;
     ++m_outputCount;
 }
+//----------------------------------------------------------------------------
 
 void Framework::registerSuite(unitos::Suite* suite)
 {
@@ -95,7 +102,8 @@ void Framework::registerSuite(unitos::Suite* suite)
     m_suites[m_suiteCount] = suite;
     ++m_suiteCount;
 }
-    
+//----------------------------------------------------------------------------
+
 unitos::Suite* Framework::findSuite(char const* name)
 {
     for(int i = 0; i < m_suiteCount; ++i) {
@@ -105,23 +113,27 @@ unitos::Suite* Framework::findSuite(char const* name)
     }
     return nullptr;
 }
-    
+//----------------------------------------------------------------------------
+
 void Framework::operator<<(String const& text)
 {
     for(int i = 0; i < m_outputCount; ++i) {
         *(m_outputs[i]) << text;
     }
 }
+//----------------------------------------------------------------------------
 
 Framework& Framework::get()
 {
     static Framework framework;
     return framework;
 }
+//----------------------------------------------------------------------------
 
 SuiteRegistrator::SuiteRegistrator(unitos::Suite* suite)
 {
     Framework::get().registerSuite(suite);
 }
+//----------------------------------------------------------------------------
 
-}
+} // end of unitos

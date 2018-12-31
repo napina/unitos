@@ -22,41 +22,39 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #pragma once
-#ifndef unitos_platform_h
-#define unitos_platform_h
 
 #if defined(__linux__) && defined(__ELF__)
-#   define UNITOS_LINUX (1)
-#   define UNITOS_ARCH32 (1)
+#	define UNITOS_LINUX (1)
+#	define UNITOS_ARCH32 (1)
 #elif defined(__APPLE__) && defined(__MACH__)
-#   define UNITOS_MACOSX (1)
-#   define UNITOS_ARCH32 (1)
+#	define UNITOS_MACOSX (1)
+#	define UNITOS_ARCH32 (1)
 #elif defined(_WIN64) || defined(_M_X64)
-#   define UNITOS_WINDOWS (1)
-#   define UNITOS_ARCH64 (1)
+#	define UNITOS_WINDOWS (1)
+#	define UNITOS_ARCH64 (1)
 #elif defined(_WIN32) || defined(_M_IX86)
-#   define UNITOS_WINDOWS (1)
-#   define UNITOS_ARCH32 (1)
+#	define UNITOS_WINDOWS (1)
+#	define UNITOS_ARCH32 (1)
 #else
 #error Could not determine your operating system in platform.h
 #endif
 
 #if defined(UNITOS_WINDOWS)
-#   ifndef WIN32_LEAN_AND_MEAN
-#       define WIN32_LEAN_AND_MEAN
-#   endif
+#	ifndef WIN32_LEAN_AND_MEAN
+#		define WIN32_LEAN_AND_MEAN
+#	endif
 #endif
 
 #if defined(UNITOS_WINDOWS)
-#   define UNITOS_TRAP() if(unitos::isDebuggerConnected()) { __debugbreak(); }
+#	define UNITOS_TRAP() if(unitos::isDebuggerConnected()) { __debugbreak(); }
 #elif defined(UNITOS_LINUX)
-#   define UNITOS_TRAP() if(unitos::isDebuggerConnected()) {  __asm { int 3 }; }
+#	define UNITOS_TRAP() if(unitos::isDebuggerConnected()) {  __asm { int 3 }; }
 #elif defined(UNITOS_MACOSX)
-#   if defined(__arm__)
-#       define UNITOS_TRAP() if(unitos::isDebuggerConnected()) { __asm__ volatile("bkpt 0"); }
-#   else
-#       define UNITOS_TRAP() if(unitos::isDebuggerConnected()) { __asm__ __volatile__("int $3\nnop\n"); }
-#   endif
+#	if defined(__arm__)
+#		define UNITOS_TRAP() if(unitos::isDebuggerConnected()) { __asm__ volatile("bkpt 0"); }
+#	else
+#		define UNITOS_TRAP() if(unitos::isDebuggerConnected()) { __asm__ __volatile__("int $3\nnop\n"); }
+#	endif
 #else
 #error UNITOS_TRAP not implemented for this platform
 #endif
@@ -71,14 +69,15 @@ IN THE SOFTWARE.
 typedef signed __int64 int64_t;
 typedef unsigned __int64 uint64_t;
 #elif defined(UNITOS_MACOSX)
-#   include <stddef.h>
-#   include <inttypes.h>
+#	include <stddef.h>
+#	include <inttypes.h>
 #else
 typedef signed long long int64_t;
 typedef unsigned long long uint64_t;
 #endif
 
 typedef decltype(nullptr) nullptr_t;
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
@@ -86,5 +85,3 @@ bool isDebuggerConnected();
 int64_t getSystemTime();
 
 }
-
-#endif

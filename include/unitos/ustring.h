@@ -22,35 +22,35 @@ IN THE SOFTWARE.
 
 =============================================================================*/
 #pragma once
-#ifndef unitos_string_h
-#define unitos_string_h
+//----------------------------------------------------------------------------
 
 namespace unitos {
 
 class String
 {
 public:
-    String(size_t capasity);
-    String(String const& other);
-    String(char const* str, size_t length);
-    explicit String(char const* str);
-    ~String();
-    
-    template<typename T>
-    String& operator<<(T const& value);
-    String& operator<<(char const* value);
-    String& operator<<(float value);
-    String& operator<<(int64_t value);
-    String& operator<<(uint64_t value);
-    void terminate();
+	String(size_t capasity);
+	String(String const& other);
+	String(char const* str, size_t length);
+	explicit String(char const* str);
+	~String();
 
-    char const* c_str() const;
-    size_t length() const;
+	template<typename T>
+	String& operator<<(T const& value);
+	String& operator<<(char const* value);
+	String& operator<<(float value);
+	String& operator<<(int64_t value);
+	String& operator<<(uint64_t value);
+	void terminate();
+
+	char const* c_str() const;
+	size_t length() const;
 private:
-    char* m_buffer;
-    size_t m_length;
-    size_t m_capasity;
+	char* m_buffer;
+	size_t m_length;
+	size_t m_capasity;
 };
+//----------------------------------------------------------------------------
 
 template<typename T>
 unitos::String toString(T const& value);
@@ -61,9 +61,9 @@ unitos::String toString(T* value);
 size_t strlen(char const* str);
 int compare(char const* str, char const* otherStr);
 void memcopy(void* dest, void const* src, size_t size);
+//----------------------------------------------------------------------------
 
 } // end of unitos
 
 #include "unitos/ustring.inl"
-
-#endif
+//----------------------------------------------------------------------------
